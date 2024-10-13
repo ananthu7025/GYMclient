@@ -3,6 +3,8 @@ import Login from "../pages/Login/index";
 import Home from "../pages/Home";
 import FranchisePage from "../pages/Franchises";
 import FranchiseForm from "../pages/Franchises/FranchiseForm";
+import GymPage from "../pages/Gym";
+import GymForm from "../pages/Gym/GymForm";
 
 interface Route {
   path: string;
@@ -38,6 +40,24 @@ export const routes: Route[] = [
   {
     path: "/edit-franchise/:id",
     element: <FranchiseForm />,
+    protected: true, // Protected route
+    layout: true, // No layout for login
+  },
+  {
+    path: "/gyms",
+    element: <GymPage />,
+    protected: true, // Protected route
+    layout: true, // No layout for login
+  },
+  {
+    path: "/add-gym",
+    element: <GymForm />,
+    protected: true, // Protected route
+    layout: true, // No layout for login
+  },
+  {
+    path: "/edit-gym/:id",
+    element: <GymForm />,
     protected: true, // Protected route
     layout: true, // No layout for login
   },

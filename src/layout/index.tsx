@@ -31,9 +31,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
           <Breadcrumb />
           <div className="app-body">
             {promiseInProgress ? (
-              <div className="spinner-border m-5" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+              <div className="loading">Loading&#8230;</div>
             ) : (
               children || <Outlet />
             )}

@@ -30,6 +30,7 @@ const Sidebar: React.FC = () => {
       link: "/super-admin/dashboard",
     },
     { label: "Franchises", icon: "ri-store-line", link: "/franchises" },
+    { label: "Gyms", icon: "ri-building-line", link: "/gyms" },
     { label: "Settings", icon: "ri-settings-3-line", link: "/settings" },
   ];
 

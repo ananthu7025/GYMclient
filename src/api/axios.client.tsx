@@ -24,6 +24,7 @@ axiosClient.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
       window.location.href = "/";
+      console.log(error)
     }
     return Promise.reject(error);
   }

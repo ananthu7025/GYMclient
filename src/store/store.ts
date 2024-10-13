@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slices/authSlice";
 import franchiseReducer from "../slices/franchiseSlice";
+import gymReducer from "../slices/gymSlice";
+
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     franchises: franchiseReducer,
+    gyms: gymReducer,
+
   },
   devTools: process.env.NODE_ENV !== "production",
 });

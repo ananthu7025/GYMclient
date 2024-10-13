@@ -33,30 +33,31 @@ const FranchisePage: React.FC = () => {
 
   return (
     <div className="row gx-4">
-      <div className="col-sm-12">
-        <div className="card">
-          <div className="card-header d-flex align-items-center justify-content-between">
-            <h5 className="card-title">Franchise List</h5>
-            <Link to="/add-franchise" className="btn btn-primary ms-auto">
-              Add New Franchise
-            </Link>
-          </div>
-          <div className="card-body">
-            <div className="table-responsive">
-              <table id="basicExample" className="table m-0 align-middle">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Franchise Admin</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Website</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {franchises?.map((franchise: any, index: any) => (
+    <div className="col-sm-12">
+      <div className="card">
+        <div className="card-header d-flex align-items-center justify-content-between">
+          <h5 className="card-title">Franchise List</h5>
+          <Link to="/add-franchise" className="btn btn-primary ms-auto">
+            Add New Franchise
+          </Link>
+        </div>
+        <div className="card-body">
+          <div className="table-responsive">
+            <table id="basicExample" className="table m-0 align-middle">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Franchise Admin</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Website</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {franchises && franchises.length > 0 ? (
+                  franchises.map((franchise: any, index: any) => (
                     <tr key={franchise._id}>
                       <td>{index + 1}</td>
                       <td>
@@ -91,23 +92,31 @@ const FranchisePage: React.FC = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="text-center">
+                     <img src="../assets/images/nodata.png" style={{height:"250px",maxWidth:"400px"}} alt="img"/>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <ConfirmationModal
-        show={isModalVisible}
-        title="Confirm Deletion"
-        message="Are you sure you want to delete this franchise?"
-        confirmText="Delete"
-        cancelText="Cancel"
-        onConfirm={handleDelete}
-        onCancel={handleHideModal}
-      />
     </div>
+    <ConfirmationModal
+      show={isModalVisible}
+      title="Confirm Deletion"
+      message="Are you sure you want to delete this franchise?"
+      confirmText="Delete"
+      cancelText="Cancel"
+      onConfirm={handleDelete}
+      onCancel={handleHideModal}
+    />
+  </div>
+  
   );
 };
 
