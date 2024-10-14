@@ -50,9 +50,7 @@ const gymSlice = createSlice({
       state.error = null;
     },
     editGymSuccess(state, action: PayloadAction<Gym>) {
-      const index = state.gyms.findIndex(
-        (g) => g._id === action.payload._id
-      );
+      const index = state.gyms.findIndex((g) => g._id === action.payload._id);
       if (index !== -1) {
         state.gyms[index] = action.payload; // Update the gym in the state
       }
@@ -67,9 +65,7 @@ const gymSlice = createSlice({
       state.error = null;
     },
     deleteGymSuccess(state, action: PayloadAction<string>) {
-      state.gyms = state.gyms.filter(
-        (gym) => gym._id !== action.payload
-      );
+      state.gyms = state.gyms.filter((gym) => gym._id !== action.payload);
       state.loading = false;
     },
     deleteGymFailure(state, action: PayloadAction<string>) {
@@ -113,10 +109,7 @@ export const createGym =
   async (dispatch: AppDispatch) => {
     dispatch(createGymStart());
     try {
-      const response = await axiosClient.post(
-        API_URLS.GYM_CREATE,
-        newGym
-      ); // Call the API to create a new gym
+      const response = await axiosClient.post(API_URLS.GYM_CREATE, newGym); // Call the API to create a new gym
       dispatch(fetchGyms()); // Re-fetch all gyms after creating one
       return response;
     } catch (error: any) {
@@ -125,23 +118,19 @@ export const createGym =
   };
 
 // Async function to fetch a gym by ID
-export const getGymById =
-  (id: string) => async (dispatch: AppDispatch) => {
-    dispatch(fetchGymByIdStart());
-    try {
-      const response = await axiosClient.get(
-        `${API_URLS.GYM_GET_BY_ID}/${id}`
-      );
-      dispatch(fetchGymByIdSuccess(response.data)); // Pass the gym data to the reducer
-      return response.data;
-    } catch (error: any) {
-      dispatch(fetchGymByIdFailure(error.message));
-    }
-  };
+export const getGymById = (id: string) => async (dispatch: AppDispatch) => {
+  dispatch(fetchGymByIdStart());
+  try {
+    const response = await axiosClient.get(`${API_URLS.GYM_GET_BY_ID}/${id}`);
+    dispatch(fetchGymByIdSuccess(response.data)); // Pass the gym data to the reducer
+    return response.data;
+  } catch (error: any) {
+    dispatch(fetchGymByIdFailure(error.message));
+  }
+};
 // Async function to edit a gym by ID
 export const editGym =
-  (id: string, updatedGym: Partial<Gym>) =>
-  async (dispatch: AppDispatch) => {
+  (id: string, updatedGym: Partial<Gym>) => async (dispatch: AppDispatch) => {
     dispatch(editGymStart());
     try {
       const response = await axiosClient.put(
@@ -155,17 +144,14 @@ export const editGym =
     }
   };
 // Async function to delete a gym
-export const deleteGym =
-  (id: string) => async (dispatch: AppDispatch) => {
-    dispatch(deleteGymStart());
-    try {
-      const response = await axiosClient.delete(
-        `${API_URLS.GYM_DELETE}/${id}`
-      );
-      dispatch(deleteGymSuccess(id));
-      return response;
-    } catch (error: any) {
-      dispatch(deleteGymFailure(error.message));
-    }
-  };
+export const deleteGym = (id: string) => async (dispatch: AppDispatch) => {
+  dispatch(deleteGymStart());
+  try {
+    const response = await axiosClient.delete(`${API_URLS.GYM_DELETE}/${id}`);
+    dispatch(deleteGymSuccess(id));
+    return response;
+  } catch (error: any) {
+    dispatch(deleteGymFailure(error.message));
+  }
+};
 export default gymSlice.reducer;

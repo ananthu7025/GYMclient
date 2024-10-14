@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,7 +24,7 @@ export default function GymForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const franchiseDetails = useSelector(
-    (state: any) => state.auth.userDetails.additionalDetails.franchiseDetails
+    (state: any) => state.auth?.userDetails?.additionalDetails?.franchiseDetails
   );
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -62,10 +63,10 @@ export default function GymForm() {
   };
   useEffect(() => {
     if (franchiseDetails) {
-      setValue("name", franchiseDetails.name);
-      setValue("website", franchiseDetails.website);
-      setValue("logo", franchiseDetails.logo);
-      setLogoPreview(franchiseDetails.logo);
+      setValue("name", franchiseDetails?.name);
+      setValue("website", franchiseDetails?.website);
+      setValue("logo", franchiseDetails?.logo);
+      setLogoPreview(franchiseDetails?.logo);
     }
   }, [franchiseDetails]);
 
@@ -112,7 +113,7 @@ export default function GymForm() {
                             className={`form-control ${
                               errors.name ? "is-invalid" : ""
                             }`}
-                            disabled={franchiseDetails.name}
+                            disabled={franchiseDetails?.name}
                             id="name"
                             {...register("name")}
                           />
@@ -333,7 +334,7 @@ export default function GymForm() {
                         <div className="col-md-6">
                           <input
                             type="text"
-                            disabled={franchiseDetails.website}
+                            disabled={franchiseDetails?.website}
                             className={`form-control ${
                               errors.website ? "is-invalid" : ""
                             }`}
@@ -376,7 +377,7 @@ export default function GymForm() {
                               <button
                                 onClick={() => setLogoPreview(null)}
                                 className="reupload-button"
-                                disabled={franchiseDetails.logo}
+                                disabled={franchiseDetails?.logo}
                               >
                                 <i
                                   className="ri-edit-fill"

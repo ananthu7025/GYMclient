@@ -1,11 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  
   const userDetails = useSelector((state: any) => state.auth.userDetails);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    // Clear local storage
+    localStorage.clear();
+
+    // Navigate to the home page
+    navigate("/");
+  };
   return (
     <div className="app-header d-flex align-items-center">
       <div className="d-flex">
@@ -62,7 +69,9 @@ const Navbar = () => {
               </h6>
             </div>
             <div className="mx-3 my-2 d-grid">
-              <button className="btn btn-danger">Logout</button>
+              <button className="btn btn-danger" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </div>
         </div>

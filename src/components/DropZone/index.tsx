@@ -6,7 +6,7 @@ interface DropzoneComponentProps {
   onDrop: any;
   acceptedFileTypes: DropzoneOptions["accept"];
   maxFiles?: number;
-  isMultiple?: boolean; 
+  isMultiple?: boolean;
 }
 
 const DropzoneComponent: React.FC<DropzoneComponentProps> = ({

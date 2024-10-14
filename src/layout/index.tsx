@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -8,7 +9,6 @@ import Breadcrumb from "../components/Breadcrumb";
 import { usePromiseTracker } from "react-promise-tracker";
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
-  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state: any) => state.auth.token);

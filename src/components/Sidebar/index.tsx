@@ -16,7 +16,6 @@ interface MenuItem {
 }
 const Sidebar: React.FC = () => {
   const userDetails = useSelector((state: any) => state.auth.userDetails);
-
   const [activeItem, setActiveItem] = useState<string>("");
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
     {}
@@ -40,8 +39,12 @@ const Sidebar: React.FC = () => {
       icon: "ri-home-6-line",
       link: "/franchise-admin/dashboard",
     },
+    { label: "Memberships", icon: "ri-vip-crown-line", link: "/memberships" },
     { label: "Gyms", icon: "ri-building-line", link: "/gyms" },
     { label: "Reports", icon: "ri-file-list-line", link: "/franchise-reports" },
+    { label: "Trainers", icon: "ri-run-line", link: "/trainers" }
+
+    
   ];
 
   const gymAdminMenuItems: MenuItem[] = [
@@ -50,6 +53,7 @@ const Sidebar: React.FC = () => {
       icon: "ri-home-6-line",
       link: "/gym-admin/dashboard",
     },
+    { label: "Memberships", icon: "ri-vip-crown-line", link: "/memberships" },
     {
       label: "Members",
       icon: "ri-group-line",
@@ -58,7 +62,7 @@ const Sidebar: React.FC = () => {
         { label: "Add Member", link: "/add-members" },
       ],
     },
-    { label: "Trainers", icon: "ri-user-line", link: "/trainers" },
+    { label: "Trainers", icon: "ri-run-line", link: "/trainers" },
     { label: "Workouts", icon: "ri-dumbbell-line", link: "/workouts" },
   ];
 
@@ -109,7 +113,9 @@ const Sidebar: React.FC = () => {
       <div className="sidebar-profile d-flex align-items-center flex-column">
         <div className="position-relative">
           <img
-            src="../assets/images/user4.png"
+            src={
+              userDetails?.additionalDetails?.logo || "../assets/images/user4.png"
+            }
             className="img-shadow img-5x mb-3 rounded-circle"
             alt="Gym Admin Templates"
           />

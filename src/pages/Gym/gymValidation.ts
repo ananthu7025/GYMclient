@@ -8,11 +8,8 @@ export const gymValidationSchema = yup.object().shape({
   zipCode: yup.string().required("Zip Code is required"),
   country: yup.string().required("Country is required"),
   phone: yup.string().required("Phone is required"),
-  franchiseId:yup.string(),
-  email: yup
-    .string()
-    .email("Invalid email")
-    .required("Gym Email is required"),
+  franchiseId: yup.string(),
+  email: yup.string().email("Invalid email").required("Gym Email is required"),
   website: yup.string().url("Invalid URL"),
   openingHours: yup.string().required("Opening hours are required"),
   closingHours: yup.string().required("Closing hours are required"),

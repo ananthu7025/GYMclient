@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../../slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import toaster from "../../utils/toaster";
+import { jwtDecode } from "jwt-decode";
+import { Roles } from "../../utils/enum";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,34 @@ const Login = () => {
       navigate("/super-admin/dashboard");
     }
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode<any>(token);
+      switch (decodedToken.role) {
+        case Roles.SUPER_ADMIN:
+          navigate("/super-admin/dashboard");
+          break;
+        case Roles.FRANCHISE_ADMIN:
+          navigate("/super-admin/dashboard");
+          break;
+        case Roles.GYM_ADMIN:
+          navigate("/super-admin/dashboard");
+          break;
+        case Roles.TRAINER:
+          navigate("/super-admin/dashboard");
+          break;
+        case Roles.MEMBER:
+          navigate("/super-admin/dashboard");
+          break;
+        default:
+          navigate("/login");
+          break;
+      }
+    } else {
+      navigate("/login");
+    }
+  }, [navigate]);
   return (
     <div className="login-bg">
       <div className="container">

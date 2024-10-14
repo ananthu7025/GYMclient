@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,7 +34,7 @@ export default function FranchiseForm() {
   const onSubmit = async (data: any) => {
     const franchiseData = {
       ...data,
-      franchiseAdminData: data.franchiseAdmin // Assuming gymAdminData is a property in the data object
+      franchiseAdminData: data.franchiseAdmin,
     };
     if (isEdit && id) {
       const res = await dispatch<any>(editFranchise(id, franchiseData));
@@ -432,12 +433,15 @@ export default function FranchiseForm() {
                       <div className="d-flex gap-2 justify-content-end">
                         <button
                           type="button"
-                          onClick={()=>reset()}
+                          onClick={() => reset()}
                           className="btn btn-outline-secondary btn-lg"
                         >
                           Cancel
                         </button>
-                        <button type="submit" className="btn btn-primary btn-lg">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg"
+                        >
                           Save
                         </button>
                       </div>

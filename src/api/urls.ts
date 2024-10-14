@@ -1,14 +1,25 @@
 export const API_URLS = {
   LOGIN: "/auth/login",
-  USER_DETAILS: "/auth//details",
+  USER_DETAILS: "/auth/details",
   FRANCHISE_GET_ALL: "/franchise",
   FRANCHISE_CREATE: "/franchise/create",
   FRANCHISE_GET_BY_ID: "/franchise",
   FRANCHISE_EDIT: "/franchise",
   FRANCHISE_DELETE: "/franchise",
-  GYM_GET_ALL: "/gym", // Fetch all gyms
-  GYM_CREATE: "/gym/create", // Create a new gym
-  GYM_GET_BY_ID: "/gym", // Fetch a gym by ID
-  GYM_EDIT: "/gym", // Edit a gym by ID
-  GYM_DELETE: "/gym", // Delete a gym by ID
+  GYM_GET_ALL: "/gym",
+  GYM_CREATE: "/gym/create",
+  GYM_GET_BY_ID: "/gym",
+  GYM_EDIT: "/gym",
+  GYM_DELETE: "/gym",
+  MEMBERSHIP_GET_ALL: "/memberships",
+  MEMBERSHIP_GET_BY_ID: "/memberships",
+  MEMBERSHIP_CREATE: "/memberships",
+  MEMBERSHIP_UPDATE: "/memberships",
+  MEMBERSHIP_DELETE: "/memberships",
+  MEMBERSHIP_IMPORT: "/memberships/bulk-import",
+  TRAINER_GET_ALL:"/trainer",
+  TRAINER_CREATE:"/trainer/create",
+  TRAINER_GET_BY_ID:"/trainer",
+  TRAINER_EDIT:"/trainer",
+  TRAINER_DELETE:"/trainer"
 };

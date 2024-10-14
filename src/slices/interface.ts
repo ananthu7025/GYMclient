@@ -1,74 +1,110 @@
-// Define the interface for FranchiseAdmin
 export interface FranchiseAdmin {
-  id: string; // The admin ID
-  name: string; // The admin's name
-  email: string; // The admin's email
-  password: string; // The admin's password (if needed)
-  role: number; // The admin's role
+  id: string; 
+  name: string; 
+  email: string; 
+  password: string; 
+  role: number; 
 }
 
 export interface Franchise {
-  _id: string; // Franchise ID
-  name: string; // Franchise name
-  franchiseAdmin: FranchiseAdmin; // Admin details associated with the franchise
-  address: string; // Address of the franchise
-  city: string; // City where the franchise is located
-  state: string; // State where the franchise is located
-  zipCode: string; // Zip code of the franchise
-  country: string; // Country where the franchise is located
-  phone: string; // Phone number of the franchise
-  email: string; // Email address of the franchise
-  website: string; // Website URL of the franchise
-  establishedYear: number; // Year the franchise was established
-  numberOfGyms: number; // Number of gyms under the franchise
-  description: string; // Description of the franchise
-  logo: string; // Logo image in base64 format
-  status: number; // Status of the franchise (e.g., active, inactive)
-  createdAt: string; // Creation timestamp
-  updatedAt: string; // Update timestamp
+  _id: string; 
+  name: string; 
+  franchiseAdmin: FranchiseAdmin; 
+  address: string; 
+  city: string; 
+  state: string; 
+  zipCode: string; 
+  country: string; 
+  phone: string; 
+  email: string; 
+  website: string; 
+  establishedYear: number; 
+  numberOfGyms: number; 
+  description: string; 
+  logo: string;
+  status: number; 
+  createdAt: string; 
+  updatedAt: string;
 }
 
-// Define the initial state for franchises
 export interface FranchiseState {
-  franchises: Franchise[]; // Array of franchises
-  loading: boolean; // Loading state
-  error: string | null; // Error state
+  franchises: Franchise[]; 
+  loading: boolean; 
+  error: string | null; 
   franchise: any;
 }
-// Define the interface for GymAdmin
 export interface GymAdmin {
-  id: string; // The admin ID
-  name: string; // The admin's name
-  email: string; // The admin's email
-  password: string; // The admin's password (if needed)
-  role: number; // The admin's role
+  id: string;
+  name: string; 
+  email: string; 
+  password: string;
+  role: number;
 }
 
-// Define the interface for Gym
 export interface Gym {
-  _id: string; // Gym ID
-  name: string; // Gym name
-  gymAdminData: GymAdmin; // Admin details associated with the gym
-  franchiseId: string; // Franchise ID that the gym belongs to
-  openingHours: string; // Opening hours of the gym (e.g., "6:00 AM")
-  closingHours: string; // Closing hours of the gym (e.g., "10:00 PM")
-  address: string; // Address of the gym
-  city: string; // City where the gym is located
-  state: string; // State where the gym is located
-  zipCode: string; // Zip code of the gym
-  country: string; // Country where the gym is located
-  phone: string; // Phone number of the gym
-  email: string; // Email address of the gym
-  website: string; // Website URL of the gym
-  logo: string; // Logo image in base64 format
-  createdAt: string; // Creation timestamp
-  updatedAt: string; // Update timestamp
+  _id: string; 
+  name: string; 
+  gymAdminData: GymAdmin; 
+  franchiseId: string; 
+  openingHours: string; 
+  closingHours: string; 
+  address: string;
+  city: string;
+  state: string; 
+  zipCode: string; 
+  country: string; 
+  phone: string;
+  email: string; 
+  website: string; 
+  logo: string; 
+  createdAt: string; 
+  updatedAt: string; 
 }
 
-// Define the initial state for gyms
 export interface GymState {
-  gyms: Gym[]; // Array of gyms
-  loading: boolean; // Loading state
-  error: string | null; // Error state
-  gym: Gym | null; // Currently selected gym (for fetching/editing purposes)
+  gyms: Gym[]; 
+  loading: boolean; 
+  error: string | null; 
+  gym: Gym | null; 
+}
+export interface MembershipState {
+  memberships: Membership[]; 
+  loading: boolean; 
+  error: string | null; 
+  membership: Membership | null; 
+  suggestion:Membership[]
+}
+export interface Membership {
+  _id?: string;
+  name: string;
+  period: string;
+  amount: number;
+  signupFee: number;
+  description: string;
+  image?: string;
+  gymId: string; 
+  franchiseId?: string; 
+  createdAt?: Date; 
+  updatedAt?: Date;
+}
+export interface Trainer {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: number; // 0 = regular, 1 = senior, etc.
+  specialization: string;
+  experience: number; // in years
+  gymId: string; 
+  franchiseId?: string;
+  status: number; // 1 = active, 0 = inactive
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface TrainerState {
+  trainers: Trainer[];
+  trainer: Trainer | null;
+  loading: boolean;
+  error: string | null;
 }

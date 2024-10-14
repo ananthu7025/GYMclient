@@ -3,6 +3,7 @@ import { AppDispatch } from "../store/store";
 import axiosClient from "../api/axios.client";
 import { API_URLS } from "../api/urls";
 import { trackPromise } from "react-promise-tracker";
+import toaster from "../utils/toaster";
 
 interface UserDetails {
   id: string; // The user ID, a string
@@ -73,7 +74,8 @@ export const login =
     } catch (error: any) {
       dispatch(loginFailure(error.message));
       localStorage.clear();
-      window.location.href = "/";
+      toaster.error("Login Failed please try again");
+      console.log(error);
     }
   };
 

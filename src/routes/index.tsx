@@ -5,6 +5,10 @@ import FranchisePage from "../pages/Franchises";
 import FranchiseForm from "../pages/Franchises/FranchiseForm";
 import GymPage from "../pages/Gym";
 import GymForm from "../pages/Gym/GymForm";
+import MembershipList from "../pages/MembershipPlans";
+import MembershipForm from "../pages/MembershipPlans/MembershipForm";
+import TarinerList from "../pages/Trainer";
+import TrainerForm from "../pages/Trainer/TrainerForm";
 
 interface Route {
   path: string;
@@ -17,48 +21,84 @@ export const routes: Route[] = [
   {
     path: "/",
     element: <Login />,
-    layout: false, // No layout for login
+    layout: false, 
   },
   {
     path: "/super-admin/dashboard",
     element: <Home />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/franchises",
     element: <FranchisePage />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/add-franchise",
     element: <FranchiseForm />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/edit-franchise/:id",
     element: <FranchiseForm />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/gyms",
     element: <GymPage />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/add-gym",
     element: <GymForm />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
   },
   {
     path: "/edit-gym/:id",
     element: <GymForm />,
-    protected: true, // Protected route
-    layout: true, // No layout for login
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/memberships",
+    element: <MembershipList />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/add-membership",
+    element: <MembershipForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/edit-membership/:id",
+    element: <MembershipForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/trainers",
+    element: <TarinerList />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/add-trainer",
+    element: <TrainerForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/edit-trainer/:id",
+    element: <TrainerForm />,
+    protected: true,
+    layout: true, 
   },
 ];
