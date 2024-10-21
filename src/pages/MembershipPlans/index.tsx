@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../../components/Modal/confirmationModal";
 import toaster from "../../utils/toaster";
+import { Roles } from "../../utils/enum";
 
 const MembershipList: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const MembershipList: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (suggestion && suggestion.length > 0) {
+    if (suggestion && suggestion.length > 0 && Roles.GYM_ADMIN) {
       setIsSuggestionModalVisible(true);
     } else {
       setIsSuggestionModalVisible(false);

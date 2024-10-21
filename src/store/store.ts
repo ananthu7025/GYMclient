@@ -4,6 +4,9 @@ import franchiseReducer from "../slices/franchiseSlice";
 import gymReducer from "../slices/gymSlice";
 import membershipReducer from "../slices/membershipSlice";
 import trainerReducer from "../slices/trainerSlice";
+import memberReducer from "../slices/memberSlice";
+import workoutReducer from "../slices/memberSlice";
+import dietPlanReducer from "../slices/dietPlanSlice";
 
 
 const store = configureStore({
@@ -13,6 +16,9 @@ const store = configureStore({
     gyms: gymReducer,
     memberships:membershipReducer,
     trainers:trainerReducer,
+    members:memberReducer,
+    workouts: workoutReducer, 
+    dietPlans: dietPlanReducer, 
 
   },
   devTools: process.env.NODE_ENV !== "production",

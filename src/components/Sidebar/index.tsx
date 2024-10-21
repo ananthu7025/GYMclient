@@ -31,6 +31,7 @@ const Sidebar: React.FC = () => {
     { label: "Franchises", icon: "ri-store-line", link: "/franchises" },
     { label: "Gyms", icon: "ri-building-line", link: "/gyms" },
     { label: "Settings", icon: "ri-settings-3-line", link: "/settings" },
+    { label: "Members", icon: "ri-group-line", link: "/members" },
   ];
 
   const franchiseAdminMenuItems: MenuItem[] = [
@@ -42,9 +43,8 @@ const Sidebar: React.FC = () => {
     { label: "Memberships", icon: "ri-vip-crown-line", link: "/memberships" },
     { label: "Gyms", icon: "ri-building-line", link: "/gyms" },
     { label: "Reports", icon: "ri-file-list-line", link: "/franchise-reports" },
-    { label: "Trainers", icon: "ri-run-line", link: "/trainers" }
-
-    
+    { label: "Trainers", icon: "ri-run-line", link: "/trainers" },
+    { label: "Members", icon: "ri-group-line", link: "/members" },
   ];
 
   const gymAdminMenuItems: MenuItem[] = [
@@ -54,28 +54,36 @@ const Sidebar: React.FC = () => {
       link: "/gym-admin/dashboard",
     },
     { label: "Memberships", icon: "ri-vip-crown-line", link: "/memberships" },
-    {
-      label: "Members",
-      icon: "ri-group-line",
-      subItems: [
-        { label: "View Members", link: "/members" },
-        { label: "Add Member", link: "/add-members" },
-      ],
-    },
+    { label: "Members", icon: "ri-group-line", link: "/members" },
+
     { label: "Trainers", icon: "ri-run-line", link: "/trainers" },
-    { label: "Workouts", icon: "ri-dumbbell-line", link: "/workouts" },
+    { label: "DietPlan", icon: "ri-bowl-line", link: "/dietplans" },
+    {
+      label: "Workout plans",
+      icon: "ri-draft-line",
+      link:"/workoutplan"
+    },
   ];
 
   const trainerMenuItems: MenuItem[] = [
     { label: "Dashboard", icon: "ri-home-6-line", link: "/trainer/dashboard" },
     { label: "My Classes", icon: "ri-calendar-line", link: "/my-classes" },
-    { label: "Members", icon: "ri-group-line", link: "/my-members" },
+    { label: "Members", icon: "ri-group-line", link: "/members" },
+    {
+      label: "Workout plans",
+      icon: "ri-draft-line",
+      link:"/workoutplan"
+    },
   ];
 
   const memberMenuItems: MenuItem[] = [
     { label: "Dashboard", icon: "ri-home-6-line", link: "/member/dashboard" },
-    { label: "My Workouts", icon: "ri-dumbbell-line", link: "/my-workouts" },
     { label: "Diet Plans", icon: "ri-bowl-line", link: "/my-diet-plan" },
+    {
+      label: "Workout plans",
+      icon: "ri-draft-line",
+      link:"/workoutplan"
+    },
   ];
 
   const getMenuItems = () => {
@@ -107,7 +115,7 @@ const Sidebar: React.FC = () => {
   };
 
   const menuItems = getMenuItems();
-
+  console.log("Expanded Items:", expandedItems);
   return (
     <nav id="sidebar" className="sidebar-wrapper">
       <div className="sidebar-profile d-flex align-items-center flex-column">

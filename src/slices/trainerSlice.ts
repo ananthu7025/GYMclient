@@ -100,7 +100,7 @@ export const fetchTrainers = () => async (dispatch: AppDispatch) => {
   dispatch(fetchTrainersStart());
   try {
     const response = await axiosClient.get(API_URLS.TRAINER_GET_ALL); // Adjust API URL
-    dispatch(fetchTrainersSuccess(response.data));
+    dispatch(fetchTrainersSuccess(response.data.tariners));
   } catch (error: any) {
     dispatch(fetchTrainersFailure(error.message));
   }
@@ -112,7 +112,10 @@ export const createTrainer =
   async (dispatch: AppDispatch) => {
     dispatch(createTrainerStart());
     try {
-      const response = await axiosClient.post(API_URLS.TRAINER_CREATE, newTrainer); // Adjust API URL
+      const response = await axiosClient.post(
+        API_URLS.TRAINER_CREATE,
+        newTrainer
+      ); // Adjust API URL
       dispatch(fetchTrainers()); // Optionally re-fetch trainers
       return response.data;
     } catch (error: any) {

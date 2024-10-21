@@ -21,5 +21,22 @@ export const API_URLS = {
   TRAINER_CREATE:"/trainer/create",
   TRAINER_GET_BY_ID:"/trainer",
   TRAINER_EDIT:"/trainer",
-  TRAINER_DELETE:"/trainer"
+  TRAINER_DELETE:"/trainer",
+  MEMBER_GET_ALL:"/member",
+  MEMBER_CREATE:"/member/create",
+  MEMBER_GET_BY_ID:"/member",
+  MEMBER_EDIT:"/member",
+  MEMBER_DELETE:"/member",
+  WORKOUT_GET_ALL: "/workouts",
+  WORKOUT_CREATE: "/workouts/create",
+  WORKOUT_GET_BY_ID: "/workouts",
+  WORKOUT_EDIT: "/workouts",
+  WORKOUT_DELETE: "/workouts",
+  WORKOUT_ASSIGN:"/workouts/assign-plan",
+  DIET_PLAN_GET_ALL:"/dietplans",
+  DIET_PLAN_CREATE:"/dietplans",
+  DIET_PLAN_GET_BY_ID:"/dietplans",
+  DIET_PLAN_EDIT:"/dietplans",
+  DIET_PLAN_DELETE:"/dietplans",
+  ASSIGN_DIET_PLAN:"/assign-diet-plan"
 };

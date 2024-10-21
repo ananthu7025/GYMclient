@@ -59,11 +59,11 @@ const Login = () => {
           navigate("/super-admin/dashboard");
           break;
         default:
-          navigate("/login");
+          navigate("/");
           break;
       }
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [navigate]);
   return (

@@ -9,6 +9,12 @@ import MembershipList from "../pages/MembershipPlans";
 import MembershipForm from "../pages/MembershipPlans/MembershipForm";
 import TarinerList from "../pages/Trainer";
 import TrainerForm from "../pages/Trainer/TrainerForm";
+import MemberList from "../pages/Member";
+import MemberForm from "../pages/Member/MemberForm";
+import WorkoutForm from "../pages/WorkoutPlans";
+import WorkoutplanList from "../pages/WorkoutPlans/WorkoutPlanList";
+import DietPlan from "../pages/DietPlan/DietForm";
+import DietPlans from "../pages/DietPlan";
 
 interface Route {
   path: string;
@@ -98,6 +104,60 @@ export const routes: Route[] = [
   {
     path: "/edit-trainer/:id",
     element: <TrainerForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/members",
+    element: <MemberList />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/add-member",
+    element: <MemberForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/edit-member/:id",
+    element: <MemberForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/add-workout",
+    element: <WorkoutForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/workoutplan",
+    element: <WorkoutplanList />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/edit-workout/:id",
+    element: <WorkoutForm />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/dietplan/add",
+    element: <DietPlan />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/edit-diet-plan/:id",
+    element: <DietPlan />,
+    protected: true,
+    layout: true, 
+  },
+  {
+    path: "/dietplans",
+    element: <DietPlans />,
     protected: true,
     layout: true, 
   },
