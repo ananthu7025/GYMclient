@@ -38,5 +38,11 @@ export const API_URLS = {
   DIET_PLAN_GET_BY_ID:"/dietplans",
   DIET_PLAN_EDIT:"/dietplans",
   DIET_PLAN_DELETE:"/dietplans",
-  ASSIGN_DIET_PLAN:"/assign-diet-plan"
+  ASSIGN_DIET_PLAN:"/assign-diet-plan",
+  CHECKIN_CHECKOUT:"/member/checkincheckout",
+  LOGGED_TIME:"/member/loggedtime",
+  FRANCHISE_GET_DUES:"/franchise/duesubscriptions/:id",
+  FRANCHISE_RECORD_PAYMENT:"/franchise/payments",
+  MEMBER_DUE_FEES:"/member/due-payments",
+  MEMBER_FEES_PAYMENT:"/member/mark-payment"
 };

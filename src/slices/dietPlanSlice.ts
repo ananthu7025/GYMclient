@@ -7,7 +7,7 @@ import { DietPlan, DietPlanState } from "./interface"; // Update your interface 
 // Initial state for the diet plan slice
 const initialState: DietPlanState = {
   dietPlans: [],
-  dietPlan: null, // Add a field to store a single fetched diet plan by ID
+  dietPlan: null,
   loading: false,
   error: null,
 };

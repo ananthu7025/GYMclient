@@ -23,7 +23,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/";
+      // location.href = "/";
       console.log(error);
     }
     return Promise.reject(error);

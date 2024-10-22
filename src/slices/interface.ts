@@ -28,7 +28,8 @@ export interface Franchise {
 }
 
 export interface FranchiseState {
-  franchises: Franchise[]; 
+  franchises: Franchise[];
+  dueFranchise:Franchise[]; 
   loading: boolean; 
   error: string | null; 
   franchise: any;
@@ -110,6 +111,7 @@ export interface TrainerState {
 }
 export interface MemberState {
   members: Member[];
+  dueMembers:Member[];
   member: Member | null;
   loading: boolean;
   error: string | null;

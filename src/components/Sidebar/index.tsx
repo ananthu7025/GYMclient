@@ -14,12 +14,11 @@ interface MenuItem {
   link?: string;
   subItems?: SubItem[];
 }
+
 const Sidebar: React.FC = () => {
   const userDetails = useSelector((state: any) => state.auth.userDetails);
   const [activeItem, setActiveItem] = useState<string>("");
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
-    {}
-  );
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
 
   // Define separate menu items for each role
   const superAdminMenuItems: MenuItem[] = [
@@ -32,6 +31,14 @@ const Sidebar: React.FC = () => {
     { label: "Gyms", icon: "ri-building-line", link: "/gyms" },
     { label: "Settings", icon: "ri-settings-3-line", link: "/settings" },
     { label: "Members", icon: "ri-group-line", link: "/members" },
+    {
+      label: "Payments",
+      icon: "ri-money-dollar-circle-line",
+      subItems: [
+        { label: "Franchise Payments", link: "/superAdmin/payments" },
+        { label: "Manage Payments", link: "/super-admin/payments/manage" },
+      ],
+    },
   ];
 
   const franchiseAdminMenuItems: MenuItem[] = [
@@ -55,13 +62,20 @@ const Sidebar: React.FC = () => {
     },
     { label: "Memberships", icon: "ri-vip-crown-line", link: "/memberships" },
     { label: "Members", icon: "ri-group-line", link: "/members" },
-
     { label: "Trainers", icon: "ri-run-line", link: "/trainers" },
-    { label: "DietPlan", icon: "ri-bowl-line", link: "/dietplans" },
+    { label: "Diet Plan", icon: "ri-bowl-line", link: "/dietplans" },
     {
-      label: "Workout plans",
+      label: "Workout Plans",
       icon: "ri-draft-line",
-      link:"/workoutplan"
+      link: "/workoutplan",
+    },
+    {
+      label: "Payments",
+      icon: "ri-money-dollar-circle-line",
+      subItems: [
+        { label: "Member Payments", link: "/gyms-admin/payments" },
+        { label: "Manage Payments", link: "/super-admin/payments/manage" },
+      ],
     },
   ];
 
@@ -70,9 +84,9 @@ const Sidebar: React.FC = () => {
     { label: "My Classes", icon: "ri-calendar-line", link: "/my-classes" },
     { label: "Members", icon: "ri-group-line", link: "/members" },
     {
-      label: "Workout plans",
+      label: "Workout Plans",
       icon: "ri-draft-line",
-      link:"/workoutplan"
+      link: "/workoutplan",
     },
   ];
 
@@ -80,9 +94,9 @@ const Sidebar: React.FC = () => {
     { label: "Dashboard", icon: "ri-home-6-line", link: "/member/dashboard" },
     { label: "Diet Plans", icon: "ri-bowl-line", link: "/my-diet-plan" },
     {
-      label: "Workout plans",
+      label: "Workout Plans",
       icon: "ri-draft-line",
-      link:"/workoutplan"
+      link: "/workoutplan",
     },
   ];
 
@@ -103,8 +117,11 @@ const Sidebar: React.FC = () => {
     }
   };
 
-  const handleClick = (itemLabel: string) => {
+  const handleClick = (itemLabel: string, hasSubItems?: boolean) => {
     setActiveItem(itemLabel);
+    if (hasSubItems) {
+      handleToggle(itemLabel);
+    }
   };
 
   const handleToggle = (label: string) => {
@@ -115,17 +132,15 @@ const Sidebar: React.FC = () => {
   };
 
   const menuItems = getMenuItems();
-  console.log("Expanded Items:", expandedItems);
+
   return (
     <nav id="sidebar" className="sidebar-wrapper">
       <div className="sidebar-profile d-flex align-items-center flex-column">
         <div className="position-relative">
           <img
-            src={
-              userDetails?.additionalDetails?.logo || "../assets/images/user4.png"
-            }
+            src={userDetails?.additionalDetails?.logo || "../assets/images/user4.png"}
             className="img-shadow img-5x mb-3 rounded-circle"
-            alt="Gym Admin Templates"
+            alt="User Avatar"
           />
           <span className="count-dot" />
         </div>
@@ -135,37 +150,32 @@ const Sidebar: React.FC = () => {
           </h6>
         </div>
       </div>
-      <div className="sidebarMenuScroll">
+      <div className="">
         <ul className="sidebar-menu">
           {menuItems.map((item, index) => (
             <li
               key={index}
-              className={`treeview ${
-                activeItem === item.label ? "active" : ""
-              }`}
+              className={`treeview ${activeItem === item.label ? "active" : ""}`}
             >
               <Link
                 to={item.link || "#"}
-                onClick={() => {
-                  handleClick(item.label);
-                  handleToggle(item.label);
-                }}
+                onClick={() => handleClick(item.label, Boolean(item.subItems))}
               >
                 <i className={item.icon} />
                 <span className="menu-text">{item.label}</span>
               </Link>
-              {item.subItems && expandedItems[item.label] && (
+              {item.subItems  && (
                 <ul className="treeview-menu">
                   {item.subItems.map((subItem, subIndex) => (
                     <li
                       key={subIndex}
-                      className={`${
-                        activeItem === subItem.label ? "active" : ""
-                      }`}
+                      className={`${activeItem === subItem.label ? "active" : ""}`}
                     >
                       <Link
                         to={subItem.link}
-                        onClick={() => handleClick(subItem.label)}
+                        onClick={() => {
+                          handleClick(subItem.label);
+                        }}
                       >
                         {subItem.label}
                       </Link>

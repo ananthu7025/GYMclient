@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { createDietPlan, fetchDietPlans, editDietPlan, getDietPlanById } from '../../slices/dietPlanSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import toaster from '../../utils/toaster';
+import React, { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import {
+  createDietPlan,
+  fetchDietPlans,
+  editDietPlan,
+  getDietPlanById,
+} from "../../slices/dietPlanSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import toaster from "../../utils/toaster";
 
 interface NutritionDetails {
   selected: boolean;
@@ -13,6 +18,8 @@ interface NutritionDetails {
 }
 
 interface FormData {
+  name: string; // Added name field
+  category: string; // Added category field
   nutritionDetails: {
     [key: string]: {
       [key: string]: NutritionDetails;
@@ -25,13 +32,15 @@ const DietPlan: React.FC = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, reset } = useForm<FormData>({
     defaultValues: {
+      name: "",
+      category: "",
       nutritionDetails: {},
     },
   });
 
-  const [activeDay, setActiveDay] = useState<string>('Sunday');
+  const [activeDay, setActiveDay] = useState<string>("Sunday");
   const [editMode, setEditMode] = useState<boolean>(false);
-  const {id} = useParams();
+  const { id } = useParams();
   // Get the specific diet plan from the store
   const dietPlan = useSelector((state: any) => state.dietPlans.dietPlan);
 
@@ -54,10 +63,10 @@ const DietPlan: React.FC = () => {
         }
       }
     };
-  
+
     fetchDietPlan();
   }, [id, dispatch, reset]);
-  
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
     if (editMode && id) {
       dispatch<any>(editDietPlan(id, data)).then(() => {
@@ -66,15 +75,29 @@ const DietPlan: React.FC = () => {
       });
     } else {
       dispatch<any>(createDietPlan(data)).then(() => {
-        toaster.success("Workout plan added successfully");
+        toaster.success("Diet plan added successfully");
         navigate("/dietplans");
       });
     }
-    console.log('Form Data: ', data);
+    console.log("Form Data: ", data);
   };
-  
-  const nutritionItems = ['Break Fast', 'Mid-Morning Snacks', 'Lunch', 'Afternoon Snacks', 'Dinner'];
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const nutritionItems = [
+    "Break Fast",
+    "Mid-Morning Snacks",
+    "Lunch",
+    "Afternoon Snacks",
+    "Dinner",
+  ];
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   const handleQuillChange = (value: string, nutrition: string) => {
     setValue(`nutritionDetails.${activeDay}.${nutrition}.details`, value);
@@ -86,6 +109,29 @@ const DietPlan: React.FC = () => {
         <div className="card mb-4">
           <div className="card-body">
             <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="mb-4">
+                    <label className="form-label">Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      {...register("name", { required: true })}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-4">
+                    <label className="form-label">Category</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      {...register("category", { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="row mb-4">
                 {/* Vertical Tabs for Days Selection */}
                 <div className="col-md-4">
@@ -95,11 +141,13 @@ const DietPlan: React.FC = () => {
                       <li key={day} className="nav-item">
                         <button
                           type="button"
-                          className={`nav-link ${activeDay === day ? 'active' : ''}`}
+                          className={`nav-link ${
+                            activeDay === day ? "active" : ""
+                          }`}
                           onClick={() => setActiveDay(day)}
                           style={{
-                            borderRadius: '0.5rem',
-                            transition: 'background-color 0.3s',
+                            borderRadius: "0.5rem",
+                            transition: "background-color 0.3s",
                           }}
                         >
                           {day}
@@ -119,25 +167,35 @@ const DietPlan: React.FC = () => {
                           <input
                             type="checkbox"
                             value={nutrition}
-                            {...register(`nutritionDetails.${activeDay}.${nutrition}.selected`)}
+                            {...register(
+                              `nutritionDetails.${activeDay}.${nutrition}.selected`
+                            )}
                             className="me-2"
                           />
                           {nutrition}
                         </label>
-                        {watch(`nutritionDetails.${activeDay}.${nutrition}.selected`) && (
+                        {watch(
+                          `nutritionDetails.${activeDay}.${nutrition}.selected`
+                        ) && (
                           <ReactQuill
-                            value={watch(`nutritionDetails.${activeDay}.${nutrition}.details`) || ''}
-                            onChange={(value) => handleQuillChange(value, nutrition)}
+                            value={
+                              watch(
+                                `nutritionDetails.${activeDay}.${nutrition}.details`
+                              ) || ""
+                            }
+                            onChange={(value) =>
+                              handleQuillChange(value, nutrition)
+                            }
                             className="mt-2"
                             placeholder={`Enter details for ${nutrition}`}
-                            style={{ height: '20rem', marginBottom: '5rem' }}
+                            style={{ height: "20rem", marginBottom: "5rem" }}
                           />
                         )}
                       </li>
                     ))}
                   </ul>
                   <button type="submit" className="btn btn-primary mt-3">
-                    {editMode ? 'Update Nutrition Plan' : '+ Add Nutrition'}
+                    {editMode ? "Update Nutrition Plan" : "+ Add Nutrition"}
                   </button>
                 </div>
               </div>

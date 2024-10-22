@@ -6,6 +6,7 @@ import { Franchise, FranchiseState } from "./interface";
 
 const initialState: FranchiseState = {
   franchises: [],
+  dueFranchise:[],
   franchise: null, // Add a field to store the fetched franchise by ID
   loading: false,
   error: null,
@@ -76,6 +77,39 @@ const franchiseSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    // Add these actions to your slice
+recordPaymentStart(state) {
+  state.loading = true;
+  state.error = null;
+},
+recordPaymentSuccess(state, action: PayloadAction<Franchise>) {
+  const index = state.franchises.findIndex(
+    (f) => f._id === action.payload._id
+  );
+  if (index !== -1) {
+    state.franchises[index] = action.payload; // Update the franchise with new payment data
+  }
+  state.loading = false;
+},
+recordPaymentFailure(state, action: PayloadAction<string>) {
+  state.loading = false;
+  state.error = action.payload;
+},
+
+// New action to fetch dues
+fetchDuesStart(state) {
+  state.loading = true;
+  state.error = null;
+},
+fetchDuesSuccess(state, action: PayloadAction<Franchise[]>) {
+  state.dueFranchise = action.payload; // Update franchises with dues
+  state.loading = false;
+},
+fetchDuesFailure(state, action: PayloadAction<string>) {
+  state.loading = false;
+  state.error = action.payload;
+},
+
   },
 });
 
@@ -94,6 +128,12 @@ export const {
   deleteFranchiseStart,
   deleteFranchiseSuccess,
   deleteFranchiseFailure,
+  recordPaymentStart,
+  recordPaymentSuccess,
+  recordPaymentFailure,
+  fetchDuesStart,
+  fetchDuesSuccess,
+  fetchDuesFailure,
 } = franchiseSlice.actions;
 
 // Async function to fetch franchises
@@ -168,4 +208,32 @@ export const deleteFranchise =
       dispatch(deleteFranchiseFailure(error.message));
     }
   };
+  // Async function to record a payment
+  export const recordPayment =
+  (id: string, paymentDetails: { amount: any; paymentDate: any }) =>
+  async (dispatch: any) => {
+    dispatch(recordPaymentStart());
+    try {
+      const response = await axiosClient.post(
+        `${API_URLS.FRANCHISE_RECORD_PAYMENT}`, // Keep the URL unchanged
+        {franchiseId:id, ...paymentDetails } // Send id along with payment details in the body
+      );
+      dispatch(recordPaymentSuccess(response.data)); // Pass the updated franchise data to the reducer
+      return response.data;
+    } catch (error: any) {
+      dispatch(recordPaymentFailure(error.message));
+    }
+  };
+
+// Async function to fetch franchises with dues
+export const getDues = () => async (dispatch: AppDispatch) => {
+  dispatch(fetchDuesStart());
+  try {
+    const response = await axiosClient.get(API_URLS.FRANCHISE_GET_DUES); // Assuming you have this endpoint
+    dispatch(fetchDuesSuccess(response.data)); // Update the state with franchises that have dues
+  } catch (error: any) {
+    dispatch(fetchDuesFailure(error.message));
+  }
+};
+
 export default franchiseSlice.reducer;

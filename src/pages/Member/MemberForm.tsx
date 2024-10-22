@@ -33,17 +33,17 @@ const MemberForm = () => {
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(memberValidation), // Add member validation
+    resolver: yupResolver(memberValidation),
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-
+console.log(gymDetails)
   // Handle form submission
   const onSubmit = async (data: any) => {
     const memberData = { ...data };
-
     if (gymDetails?._id) {
+
       memberData.gymId = gymDetails._id; // Set gym ID
     }
     const formattedData = {
@@ -105,6 +105,8 @@ const MemberForm = () => {
   useEffect(() => {
     dispatch<any>(fetchMemberships());
     dispatch<any>(fetchMembers());
+    const today = new Date().toISOString().split('T')[0];
+    setValue("firstPaymentDate", today);
   }, [dispatch]);
   useEffect(() => {
     const generateMemberId = () => {

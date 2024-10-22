@@ -33,14 +33,42 @@ const Login = () => {
     const res = await dispatch<any>(
       login({ email: data.email, password: data.password })
     );
+  
     if (res?.data?.saveStatus) {
-      toaster.success("Login succsessfull");
-      navigate("/super-admin/dashboard");
+      const token = res.data.token;
+      localStorage.setItem("token", token); // Assuming the token is being returned in the login response
+      const decodedToken = jwtDecode<any>(token);
+  
+      toaster.success("Login successful");
+  
+      // Navigate based on the user's role
+      switch (decodedToken.role) {
+        case Roles.SUPER_ADMIN:
+          navigate("/super-admin/dashboard");
+          break;
+        case Roles.FRANCHISE_ADMIN:
+          navigate("/franchise-admin/dashboard");
+          break;
+        case Roles.GYM_ADMIN:
+          navigate("/gym-admin/dashboard");
+          break;
+        case Roles.TRAINER:
+          navigate("/trainer/dashboard");
+          break;
+        case Roles.MEMBER:
+          navigate("/member/dashboard");
+          break;
+        default:
+          navigate("/");
+          break;
+      }
     }
   };
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      debugger
       const decodedToken = jwtDecode<any>(token);
       switch (decodedToken.role) {
         case Roles.SUPER_ADMIN:

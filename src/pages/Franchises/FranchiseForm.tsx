@@ -19,6 +19,7 @@ export default function FranchiseForm() {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(franchiseValidationSchema),
@@ -78,7 +79,29 @@ export default function FranchiseForm() {
     };
     fetchFranchise();
   }, [id]);
+  const subscriptionDuration = watch("subscriptionDuration");
 
+  useEffect(() => {
+    const calculateNextPaymentDate = () => {
+      const currentDate = new Date();
+      let nextPaymentDate;
+
+      if (subscriptionDuration) {
+        nextPaymentDate = new Date(currentDate);
+        nextPaymentDate.setMonth(
+          currentDate.getMonth() + Number(subscriptionDuration)
+        );
+        setValue(
+          "nextPaymentDate",
+          nextPaymentDate.toISOString().split("T")[0]
+        ); // Format as YYYY-MM-DD
+      } else {
+        setValue("nextPaymentDate", ""); // Clear the field if no duration is selected
+      }
+    };
+
+    calculateNextPaymentDate();
+  }, [subscriptionDuration]);
   return (
     <div className="row gx-4">
       <div className="col-sm-12">
@@ -429,6 +452,93 @@ export default function FranchiseForm() {
                         </div>
                       </div>
                     </fieldset>
+                    <fieldset>
+                      <legend className="mb-4 px-3">
+                        Subscription Information
+                      </legend>
+                      <div style={{ paddingLeft: "4rem" }}>
+                        {/* Subscription Plan */}
+                        <div className="mb-3 row">
+                          <label
+                            htmlFor="subscriptionAmount"
+                            className="col-md-2 col-form-label"
+                          >
+                            Subscription Amount
+                            <span className="text-danger"> *</span>
+                          </label>
+                          <div className="col-md-6">
+                            <input
+                              type="number"
+                              className={`form-control ${
+                                errors.subscriptionAmount ? "is-invalid" : ""
+                              }`}
+                              id="subscriptionAmount"
+                              {...register("subscriptionAmount")}
+                            />
+                            <div className="invalid-feedback">
+                              {errors.subscriptionAmount?.message}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mb-3 row">
+                          <label
+                            htmlFor="subscriptionDuration"
+                            className="col-md-2 col-form-label"
+                          >
+                            Subscription Duration (Months)
+                            <span className="text-danger"> *</span>
+                          </label>
+                          <div className="col-md-6">
+                            <select
+                              className={`form-control ${
+                                errors.subscriptionDuration ? "is-invalid" : ""
+                              }`}
+                              id="subscriptionDuration"
+                              {...register("subscriptionDuration", {
+                                required: "This field is required",
+                              })}
+                            >
+                              <option value="">Select Duration</option>
+                              <option value="1">1 Month</option>
+                              <option value="3">3 Months</option>
+                              <option value="6">6 Months</option>
+                              <option value="12">12 Months</option>
+                            </select>
+                            <div className="invalid-feedback">
+                              {errors.subscriptionDuration?.message}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Next Payment Date */}
+                        <div className="mb-3 row">
+                          <label
+                            htmlFor="nextPaymentDate"
+                            className="col-md-2 col-form-label"
+                          >
+                            Next Payment Date
+                            <span className="text-danger"> *</span>
+                          </label>
+                          <div className="col-md-6">
+                            <input
+                              type="date"
+                              className={`form-control ${
+                                errors.nextPaymentDate ? "is-invalid" : ""
+                              }`}
+                              id="nextPaymentDate"
+                              {...register("nextPaymentDate", {
+                                required: "This field is required",
+                              })}
+                              readOnly // Make it read-only as it's calculated
+                            />
+                            <div className="invalid-feedback">
+                              {errors.nextPaymentDate?.message}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
                     <div className="col-sm-8 mx-3 mt-2 mb-3">
                       <div className="d-flex gap-2 justify-content-end">
                         <button

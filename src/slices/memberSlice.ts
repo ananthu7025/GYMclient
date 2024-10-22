@@ -6,6 +6,7 @@ import { Member, MemberState } from "./interface";
 
 const initialState: MemberState = {
   members: [],
+  dueMembers:[],
   member: null, // Store fetched member by ID
   loading: false,
   error: null,
@@ -60,6 +61,18 @@ const memberSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    fetchMembersWithDueFeesStart(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchMembersWithDueFeesSuccess(state, action: PayloadAction<Member[]>) {
+      state.dueMembers = action.payload; // Set the members with due fees
+      state.loading = false;
+    },
+    fetchMembersWithDueFeesFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -76,6 +89,9 @@ export const {
   editMemberFailure,
   deleteMemberStart,
   deleteMemberFailure,
+  fetchMembersWithDueFeesStart,
+  fetchMembersWithDueFeesSuccess,
+  fetchMembersWithDueFeesFailure,
 } = memberSlice.actions;
 
 // Async function to fetch members
@@ -140,6 +156,16 @@ export const deleteMember = (id: string) => async (dispatch: AppDispatch) => {
     return response;
   } catch (error: any) {
     dispatch(deleteMemberFailure(error.message));
+  }
+};
+// Async function to fetch members with due fees
+export const fetchMembersWithDueFees = () => async (dispatch: AppDispatch) => {
+  dispatch(fetchMembersWithDueFeesStart());
+  try {
+    const response = await axiosClient.get(`${API_URLS.MEMBER_DUE_FEES}/12`); // Adjust the URL to your API endpoint
+    dispatch(fetchMembersWithDueFeesSuccess(response.data.members)); // Assuming response has members array
+  } catch (error: any) {
+    dispatch(fetchMembersWithDueFeesFailure(error.message));
   }
 };
 

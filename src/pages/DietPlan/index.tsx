@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  fetchDietPlans } from "../../slices/dietPlanSlice";
+import { fetchDietPlans } from "../../slices/dietPlanSlice";
 import { Link } from "react-router-dom";
 import { MemberSearchModal } from "./AssignModal";
 import { fetchMembers } from "../../slices/memberSlice";
 
-
 const DietPlans: React.FC = () => {
   const dispatch = useDispatch();
-  const { dietPlans, loading, error } = useSelector((state: any) => state.dietPlans);
-  const { members } = useSelector((state: any) => state.members); // Updated state to members
-  const [dietPlanId, setDietPlanId] = useState(""); // Change from trainerId to workoutId
+  const { dietPlans, loading, error } = useSelector(
+    (state: any) => state.dietPlans
+  );
+  const { members } = useSelector((state: any) => state.members);
+  const [dietPlanId, setDietPlanId] = useState("");
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -24,7 +25,7 @@ const DietPlans: React.FC = () => {
     dispatch<any>(fetchDietPlans());
   }, [dispatch]);
   useEffect(() => {
-    dispatch<any>(fetchMembers()); // Fetch members instead of trainers
+    dispatch<any>(fetchMembers());
   }, [dispatch]);
   const handleCloseModal = () => setShowModal(false);
 
@@ -50,6 +51,7 @@ const DietPlans: React.FC = () => {
                     <tr>
                       <th>#</th>
                       <th>Template Name</th>
+                      <th>Category</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -58,7 +60,8 @@ const DietPlans: React.FC = () => {
                       dietPlans.map((plan: any, index: any) => (
                         <tr key={plan._id}>
                           <td>{index + 1}</td>
-                          <td>Template {index + 1}</td>
+                          <td>{plan.name}</td>
+                          <td>{plan.category}</td>
                           <td>
                             <div className="d-inline-flex gap-1">
                               <Link
@@ -67,7 +70,7 @@ const DietPlans: React.FC = () => {
                               >
                                 <i className="ri-edit-box-line" />
                               </Link>
-                               <button
+                              <button
                                 className="btn btn-outline-primary btn-sm"
                                 onClick={() => handleOpenModal(plan._id)} // Handle Assign action
                               >
